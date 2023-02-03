@@ -4,6 +4,8 @@ package com.ectimel.blogspringbootrestapi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,11 +30,7 @@ public class Post {
     @Column(name = "content", nullable = false)
     private String content;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments;
 
-    public Long getId() {
-        return id;
-    }
 }
