@@ -1,8 +1,12 @@
 package com.ectimel.blogspringbootrestapi.payload;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class CommentDto {
     private Long id;
     private String name;

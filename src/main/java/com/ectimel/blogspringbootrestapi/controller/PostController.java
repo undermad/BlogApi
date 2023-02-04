@@ -4,19 +4,20 @@ import com.ectimel.blogspringbootrestapi.payload.PostDto;
 import com.ectimel.blogspringbootrestapi.payload.PostResponse;
 import com.ectimel.blogspringbootrestapi.service.PostService;
 import com.ectimel.blogspringbootrestapi.utils.AppConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("api/posts")
 public class PostController {
 
-    @Autowired
-    private PostService postService;
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {

@@ -1,13 +1,17 @@
 package com.ectimel.blogspringbootrestapi.payload;
 
-import lombok.Data;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostDto {
 
-    private long id;
+    private Long id;
     private String title;
     private String description;
     private String content;
