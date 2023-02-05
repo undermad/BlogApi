@@ -3,9 +3,7 @@ package com.ectimel.blogspringbootrestapi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,7 +18,7 @@ public class Comment {
     private String email;
     private String messageBody;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 }

@@ -9,9 +9,9 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Entity
 @Table(
         name = "posts",

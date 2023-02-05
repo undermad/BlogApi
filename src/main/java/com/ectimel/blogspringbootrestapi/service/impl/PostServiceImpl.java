@@ -64,7 +64,8 @@ public class PostServiceImpl implements PostService {
     public PostDto getPostById(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
-        post.getComments().forEach(System.out::println);
+
+        post.getComments().forEach(comment -> System.out.println(comment.getName()));
         System.out.println("hereeee");
         return mapToDTO(post);
     }

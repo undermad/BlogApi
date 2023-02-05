@@ -3,7 +3,6 @@ package com.ectimel.blogspringbootrestapi.service;
 import com.ectimel.blogspringbootrestapi.payload.PostDto;
 import com.ectimel.blogspringbootrestapi.payload.PostResponse;
 
-import java.util.List;
 
 public interface PostService {
     PostDto createPost(PostDto postDto);

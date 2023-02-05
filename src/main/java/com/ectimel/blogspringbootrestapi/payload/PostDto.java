@@ -4,11 +4,7 @@ import lombok.*;
 
 import java.util.Set;
 
-@Getter
-@Setter
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class PostDto {
 
     private Long id;
