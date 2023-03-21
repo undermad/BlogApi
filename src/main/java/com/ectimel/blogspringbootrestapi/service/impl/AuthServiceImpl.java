@@ -7,6 +7,7 @@ import com.ectimel.blogspringbootrestapi.payload.LoginDto;
 import com.ectimel.blogspringbootrestapi.payload.RegisterDto;
 import com.ectimel.blogspringbootrestapi.repository.RoleRepository;
 import com.ectimel.blogspringbootrestapi.repository.UserRepository;
+import com.ectimel.blogspringbootrestapi.security.JwtTokenProvider;
 import com.ectimel.blogspringbootrestapi.service.AuthService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,26 @@ import java.util.Set;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final ModelMapper modelMapper;
-    private final PasswordEncoder passwordEncoder;
+    private AuthenticationManager authenticationManager;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private ModelMapper modelMapper;
+    private PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager,
+                           UserRepository userRepository,
+                           RoleRepository roleRepository,
+                           ModelMapper modelMapper,
+                           PasswordEncoder passwordEncoder,
+                           JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
 
@@ -49,7 +57,9 @@ public class AuthServiceImpl implements AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return "User logged-in successfully.";
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        return token;
     }
 
     @Override

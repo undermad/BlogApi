@@ -1,5 +1,6 @@
 package com.ectimel.blogspringbootrestapi.controller;
 
+import com.ectimel.blogspringbootrestapi.payload.JwtAuthResponse;
 import com.ectimel.blogspringbootrestapi.payload.LoginDto;
 import com.ectimel.blogspringbootrestapi.payload.RegisterDto;
 import com.ectimel.blogspringbootrestapi.service.AuthService;
@@ -24,10 +25,13 @@ public class AuthController {
     //Build login rest api
 
     @PostMapping(value = {"/login", "/signin"})
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String response = authService.login(loginDto);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
+        String token = authService.login(loginDto);
 
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 
     //Build register rest api
