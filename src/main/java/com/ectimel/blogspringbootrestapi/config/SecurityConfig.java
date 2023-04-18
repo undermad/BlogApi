@@ -2,6 +2,7 @@ package com.ectimel.blogspringbootrestapi.config;
 
 import com.ectimel.blogspringbootrestapi.security.JwtAuthenticationEntryPoint;
 import com.ectimel.blogspringbootrestapi.security.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,12 +23,14 @@ public class SecurityConfig {
 
     private UserDetailsService userDetailsService;
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private JwtAuthenticationFilter authenticationFilter;
+    private JwtAuthenticationFilter JwtAuthenticationFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAuthenticationFilter authenticationFilter) {
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAuthenticationFilter JwtAuthenticationFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.authenticationFilter = authenticationFilter;
+
+        this.JwtAuthenticationFilter = JwtAuthenticationFilter;
     }
 
     @Bean
@@ -48,11 +51,13 @@ public class SecurityConfig {
                         authorize -> authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                                 .requestMatchers( "/api/auth/*").permitAll()
                                 .anyRequest()
-                                .authenticated())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                                .authenticated()
+                ).exceptionHandling(
+                        exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

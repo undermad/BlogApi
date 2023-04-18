@@ -19,7 +19,7 @@ public class JwtTokenProvider {
     private String jwtSecret;
 
     @Value("${app-jwt-expiration-milliseconds}")
-    private String jwtExpirationDate;
+    private Long jwtExpirationDate;
 
 
 
@@ -39,8 +39,10 @@ public class JwtTokenProvider {
         return token;
     }
 
-    private Key key() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+    private Key key(){
+        return Keys.hmacShaKeyFor(
+                Decoders.BASE64.decode(jwtSecret)
+        );
     }
 
     //get username from jwt token
@@ -56,24 +58,22 @@ public class JwtTokenProvider {
         return username;
     }
 
-    public boolean validateToken(String token) {
-        try {
-
+    public boolean validateToken(String token){
+        try{
             Jwts.parserBuilder()
                     .setSigningKey(key())
                     .build()
                     .parse(token);
             return true;
-        } catch (MalformedJwtException exception){
+        } catch (MalformedJwtException ex) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Invalid JWT token");
-        } catch (ExpiredJwtException exception){
+        } catch (ExpiredJwtException ex) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Expired JWT token");
-        } catch (UnsupportedJwtException exception){
+        } catch (UnsupportedJwtException ex) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Unsupported JWT token");
-        } catch (IllegalArgumentException exception){
+        } catch (IllegalArgumentException ex) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "JWT claims string is empty.");
         }
-
     }
 
 }
