@@ -1,5 +1,7 @@
 package com.ectimel.blogspringbootrestapi.payload;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -23,7 +25,11 @@ public class PostDto {
     @NotEmpty(message = "Can't be empty.")
     private String content;
 
-
     private Set<CommentDto> comments;
+
+
+    @Max(value = 5, message = "Category range is from 2-5: 2 - music \n3 - unknown \n")
+    @Min(value = 2)
+    private Long categoryId;
 
 }
