@@ -4,6 +4,8 @@ import com.ectimel.blogspringbootrestapi.payload.JwtAuthResponse;
 import com.ectimel.blogspringbootrestapi.payload.LoginDto;
 import com.ectimel.blogspringbootrestapi.payload.RegisterDto;
 import com.ectimel.blogspringbootrestapi.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,12 @@ public class AuthController {
 
     //Build login rest api
 
+    @Operation(
+            summary = "Login",
+            description = "Login to receive bearer token.")
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http status 200 SUCCESS")
     @PostMapping(value = {"/login", "/signin"})
     public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
         String token = authService.login(loginDto);
@@ -34,7 +42,13 @@ public class AuthController {
         return ResponseEntity.ok(jwtAuthResponse);
     }
 
-    //Build register rest api
+
+    @Operation(
+            summary = "Register",
+            description = "Register to API to perform authorised operations.")
+    @ApiResponse(
+            responseCode = "201",
+            description = "Http status 201 CREATED")
     @PostMapping(value = {"/register", "/signup"})
     public ResponseEntity<String> register(@Valid @RequestBody RegisterDto registerDto){
         String response = authService.register(registerDto);
