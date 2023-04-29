@@ -18,9 +18,9 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/posts")
+@RequestMapping("api/v1/posts")
 @Tag(
-        name = "CRUD REST APIs for Post resource."
+        name = "Post resource V1"
 )
 public class PostController {
 
@@ -33,12 +33,10 @@ public class PostController {
 
     @Operation(
             summary = "Create Post",
-            description = "Create Post is used to save post into database."
-    )
+            description = "Create Post is used to save post into database.")
     @ApiResponse(
             responseCode = "201",
-            description = "Http status 201 CREATED"
-    )
+            description = "Http status 201 CREATED")
     @SecurityRequirement(name = "Bear Authentication")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
@@ -48,12 +46,10 @@ public class PostController {
 
     @Operation(
             summary = "Get all posts",
-            description = "Get all posts existing in database."
-    )
+            description = "Get all posts existing in database.")
     @ApiResponse(
             responseCode = "200",
-            description = "Http status 200 SUCCESS"
-    )
+            description = "Http status 200 SUCCESS")
     @GetMapping
     public ResponseEntity<PostResponse> getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NO, required = false) int pageNo,

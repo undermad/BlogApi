@@ -7,13 +7,14 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Schema(
-        description = "PostDtoV1 Model Information."
+        description = "PostDtoV2 Model Information."
 )
-public class PostDto {
+public class PostDtoV2 {
     private Long id;
 
     @Schema(description = "Blog post tittle.")
@@ -37,5 +38,8 @@ public class PostDto {
     @Max(value = 5, message = "Category range is from 2-5: 2 - music \n3 - unknown \n")
     @Min(value = 2)
     private Long categoryId;
+
+    @Schema(description = "Tags associated with post")
+    private List<String> tags;
 
 }

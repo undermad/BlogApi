@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+// http://localhost:8080/swagger-ui/index.html
+
 @SpringBootApplication
 @OpenAPIDefinition(
         info = @Info(
